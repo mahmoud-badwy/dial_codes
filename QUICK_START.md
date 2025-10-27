@@ -65,6 +65,92 @@ final byName = await DialCodesService.instance.getCountriesSortedByName();
 final byDialCode = await DialCodesService.instance.getCountriesSortedByDialCode();
 ```
 
+## Using Ready-Made Widgets
+
+### Country Picker Dialog
+
+```dart
+// Simple usage
+final country = await CountryPickerDialog.show(context);
+
+// With search enabled (default)
+final country = await CountryPickerDialog.show(
+  context,
+  showSearch: true,
+);
+
+// Without search
+final country = await CountryPickerDialog.show(
+  context,
+  showSearch: false,
+);
+
+// Custom options
+final country = await CountryPickerDialog.show(
+  context,
+  title: 'Choose Your Country',
+  searchHint: 'Type to search...',
+  showFlags: true,
+  showCountryCodes: true,
+  showDialCodes: false,
+);
+```
+
+### Country Dropdown
+
+```dart
+class MyForm extends StatefulWidget {
+  @override
+  _MyFormState createState() => _MyFormState();
+}
+
+class _MyFormState extends State<MyForm> {
+  Country? selectedCountry;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        // Full dropdown with all options
+        CountryDropdown(
+          selectedCountry: selectedCountry,
+          onChanged: (country) {
+            setState(() => selectedCountry = country);
+          },
+          decoration: InputDecoration(
+            labelText: 'Country',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        
+        // Dropdown without flags
+        CountryDropdown(
+          selectedCountry: selectedCountry,
+          onChanged: (country) {
+            setState(() => selectedCountry = country);
+          },
+          showFlag: false,
+          decoration: InputDecoration(
+            labelText: 'Country (No Flag)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        
+        // Only dial codes
+        CountryDropdown(
+          selectedCountry: selectedCountry,
+          onChanged: (country) {
+            setState(() => selectedCountry = country);
+          },
+          showCountryCode: false,
+          hint: 'Select dial code',
+        ),
+      ],
+    );
+  }
+}
+```
+
 ## Complete Example: Country Picker Widget
 
 ```dart

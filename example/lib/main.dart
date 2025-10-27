@@ -13,7 +13,258 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Dial Codes Example',
       theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
-      home: const CountryListPage(),
+      home: const HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+
+  final List<Widget> _pages = [
+    const CountryListPage(),
+    const WidgetsDemoPage(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _pages[_currentIndex],
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _currentIndex,
+        onDestinationSelected: (index) {
+          setState(() => _currentIndex = index);
+        },
+        destinations: const [
+          NavigationDestination(icon: Icon(Icons.list), label: 'Country List'),
+          NavigationDestination(
+            icon: Icon(Icons.widgets),
+            label: 'Widgets Demo',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class WidgetsDemoPage extends StatefulWidget {
+  const WidgetsDemoPage({super.key});
+
+  @override
+  State<WidgetsDemoPage> createState() => _WidgetsDemoPageState();
+}
+
+class _WidgetsDemoPageState extends State<WidgetsDemoPage> {
+  Country? selectedCountryDialog;
+  Country? selectedCountryDropdown;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Widgets Demo'), elevation: 2),
+      body: ListView(
+        padding: const EdgeInsets.all(16.0),
+        children: [
+          // Dialog Examples
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Country Picker Dialog',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Dialog with search
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      final country = await CountryPickerDialog.show(
+                        context,
+                        showSearch: true,
+                      );
+                      if (country != null) {
+                        setState(() => selectedCountryDialog = country);
+                      }
+                    },
+                    icon: const Icon(Icons.search),
+                    label: const Text('Open Dialog (with search)'),
+                  ),
+                  const SizedBox(height: 8),
+
+                  // Dialog without search
+                  OutlinedButton.icon(
+                    onPressed: () async {
+                      final country = await CountryPickerDialog.show(
+                        context,
+                        showSearch: false,
+                        title: 'Choose Country',
+                      );
+                      if (country != null) {
+                        setState(() => selectedCountryDialog = country);
+                      }
+                    },
+                    icon: const Icon(Icons.public),
+                    label: const Text('Open Dialog (no search)'),
+                  ),
+                  const SizedBox(height: 8),
+
+                  // Dialog with custom options
+                  FilledButton.icon(
+                    onPressed: () async {
+                      final country = await CountryPickerDialog.show(
+                        context,
+                        showSearch: true,
+                        showFlags: true,
+                        showCountryCodes: false,
+                        showDialCodes: true,
+                        title: 'Select Dial Code',
+                      );
+                      if (country != null) {
+                        setState(() => selectedCountryDialog = country);
+                      }
+                    },
+                    icon: const Icon(Icons.phone),
+                    label: const Text('Open Dialog (custom)'),
+                  ),
+
+                  if (selectedCountryDialog != null) ...[
+                    const SizedBox(height: 16),
+                    const Divider(),
+                    const SizedBox(height: 8),
+                    ListTile(
+                      leading: Text(
+                        selectedCountryDialog!.emoji,
+                        style: const TextStyle(fontSize: 32),
+                      ),
+                      title: Text(selectedCountryDialog!.name),
+                      subtitle: Text(
+                        '${selectedCountryDialog!.code} • ${selectedCountryDialog!.dialCode}',
+                      ),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          setState(() => selectedCountryDialog = null);
+                        },
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 16),
+
+          // Dropdown Examples
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Country Dropdown',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Full dropdown
+                  CountryDropdown(
+                    selectedCountry: selectedCountryDropdown,
+                    onChanged: (country) {
+                      setState(() => selectedCountryDropdown = country);
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Select Country',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Dropdown without flag
+                  CountryDropdown(
+                    selectedCountry: selectedCountryDropdown,
+                    onChanged: (country) {
+                      setState(() => selectedCountryDropdown = country);
+                    },
+                    showFlag: false,
+                    decoration: const InputDecoration(
+                      labelText: 'No Flag',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Dropdown with dial code only
+                  CountryDropdown(
+                    selectedCountry: selectedCountryDropdown,
+                    onChanged: (country) {
+                      setState(() => selectedCountryDropdown = country);
+                    },
+                    showCountryCode: false,
+                    decoration: const InputDecoration(
+                      labelText: 'Country & Dial Code',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+
+                  if (selectedCountryDropdown != null) ...[
+                    const SizedBox(height: 16),
+                    const Divider(),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.blue[50],
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        children: [
+                          Text(
+                            selectedCountryDropdown!.emoji,
+                            style: const TextStyle(fontSize: 24),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  selectedCountryDropdown!.name,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  '${selectedCountryDropdown!.code} • ${selectedCountryDropdown!.dialCode}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey[700],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

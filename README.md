@@ -23,6 +23,7 @@ A comprehensive Flutter package that provides easy access to country information
 - 🚀 Fast and efficient with built-in caching
 - 📱 Easy to use API
 - 🎯 Type-safe with full Dart null-safety support
+- 🎨 **Ready-to-use widgets** (CountryPickerDialog, CountryDropdown)
 
 ## Getting Started
 
@@ -126,6 +127,97 @@ SvgPicture.network(
   placeholderBuilder: (context) => CircularProgressIndicator(),
 )
 ```
+
+### Ready-to-Use Widgets
+
+#### Country Picker Dialog
+
+Display a dialog to select a country with optional search functionality:
+
+```dart
+import 'package:dial_codes/dial_codes.dart';
+
+// Show dialog with search
+final country = await CountryPickerDialog.show(
+  context,
+  showSearch: true,  // Show search bar (default: true)
+  title: 'Select Country',
+  searchHint: 'Search countries...',
+  showFlags: true,
+  showCountryCodes: true,
+  showDialCodes: true,
+);
+
+if (country != null) {
+  print('Selected: ${country.name}');
+}
+
+// Dialog without search
+final country = await CountryPickerDialog.show(
+  context,
+  showSearch: false,  // Hide search bar
+);
+```
+
+#### Country Dropdown
+
+A dropdown widget to select countries:
+
+```dart
+import 'package:dial_codes/dial_codes.dart';
+
+class MyWidget extends StatefulWidget {
+  @override
+  _MyWidgetState createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  Country? selectedCountry;
+
+  @override
+  Widget build(BuildContext context) {
+    return CountryDropdown(
+      selectedCountry: selectedCountry,
+      onChanged: (country) {
+        setState(() => selectedCountry = country);
+      },
+      showFlag: true,           // Show flag emoji (default: true)
+      showCountryCode: true,    // Show country code (default: true)
+      showDialCode: true,       // Show dial code (default: true)
+      decoration: InputDecoration(
+        labelText: 'Select Country',
+        border: OutlineInputBorder(),
+      ),
+    );
+  }
+}
+```
+
+#### Widget Customization Options
+
+**CountryPickerDialog Options:**
+- `showSearch` - Enable/disable search bar
+- `title` - Dialog title
+- `searchHint` - Search field hint text
+- `showFlags` - Show/hide flag emojis
+- `showCountryCodes` - Show/hide country codes
+- `showDialCodes` - Show/hide dial codes
+- `countryNameStyle` - Custom text style for country names
+- `subtitleStyle` - Custom text style for subtitles
+- `searchDecoration` - Custom decoration for search field
+
+**CountryDropdown Options:**
+- `selectedCountry` - Currently selected country
+- `onChanged` - Callback when selection changes
+- `showFlag` - Show/hide flag emoji
+- `showCountryCode` - Show/hide country code
+- `showDialCode` - Show/hide dial code
+- `hint` - Hint text when no country selected
+- `decoration` - Input decoration
+- `style` - Text style
+- `enabled` - Enable/disable dropdown
+- `itemBuilder` - Custom item builder
+- `selectedItemBuilder` - Custom selected item builder
 
 ### Building a Country Picker
 
