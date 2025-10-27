@@ -1,5 +1,5 @@
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+/// A Flutter package for accessing country dial codes and information
+library dial_codes;
+
+export 'src/models/country.dart';
+export 'src/dial_codes_service.dart';

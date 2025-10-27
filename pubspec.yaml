@@ -1,7 +1,7 @@
 name: dial_codes
-description: "A new Flutter package project."
+description: "A comprehensive Flutter package for accessing country dial codes, country information, flags, and more."
 version: 0.0.1
-homepage:
+homepage: https://github.com/mahmoud-badwy/dial_codes
 
 environment:
   sdk: ^3.8.1
@@ -23,9 +23,8 @@ dev_dependencies:
 flutter:
 
   # To add assets to your package, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/json/country_codes.json
   #
   # For details regarding assets in packages, see
   # https://flutter.dev/to/asset-from-package
