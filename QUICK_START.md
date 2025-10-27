@@ -121,8 +121,36 @@ Country {
   String emoji;         // "🇺🇸"
   String unicode;       // "U+1F1FA U+1F1F8"
   String dialCode;      // "+1"
-  String image;         // URL to flag SVG
+  String image;         // "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/US.svg"
 }
+```
+
+## Displaying Country Flags
+
+### Using Emoji (Built-in)
+```dart
+Text(
+  country.emoji,
+  style: TextStyle(fontSize: 32),
+)
+```
+
+### Using SVG Images
+First, add `flutter_svg` to your dependencies:
+```yaml
+dependencies:
+  flutter_svg: ^2.0.0
+```
+
+Then use the SVG image URL:
+```dart
+import 'package:flutter_svg/flutter_svg.dart';
+
+SvgPicture.network(
+  country.image,
+  width: 32,
+  height: 32,
+)
 ```
 
 ## API Reference

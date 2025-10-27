@@ -91,8 +91,40 @@ if (country != null) {
   print('Emoji: ${country.emoji}');
   print('Unicode: ${country.unicode}');
   print('Dial Code: ${country.dialCode}');
-  print('Flag Image: ${country.image}');
+  print('Flag Image: ${country.image}'); // SVG image URL
 }
+```
+
+### Displaying Country Flags
+
+Each country includes both an emoji flag and an SVG image URL:
+
+**Option 1: Using Emoji Flags (No Dependencies)**
+```dart
+Text(
+  country.emoji,  // 🇺🇸
+  style: TextStyle(fontSize: 32),
+)
+```
+
+**Option 2: Using SVG Images**
+
+Add `flutter_svg` to your `pubspec.yaml`:
+```yaml
+dependencies:
+  flutter_svg: ^2.0.0
+```
+
+Then display the SVG flag:
+```dart
+import 'package:flutter_svg/flutter_svg.dart';
+
+SvgPicture.network(
+  country.image,  // https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/US.svg
+  width: 32,
+  height: 32,
+  placeholderBuilder: (context) => CircularProgressIndicator(),
+)
 ```
 
 ### Building a Country Picker
@@ -161,7 +193,7 @@ Each `Country` object contains:
 - `emoji`: Country flag emoji (e.g., "🇺🇸")
 - `unicode`: Unicode representation of the flag (e.g., "U+1F1FA U+1F1F8")
 - `dialCode`: International dialing code (e.g., "+1")
-- `image`: URL to the country's flag image
+- `image`: URL to the country's flag SVG image (e.g., "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/US.svg")
 
 ## API Reference
 
