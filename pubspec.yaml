@@ -1,7 +1,9 @@
 name: dial_codes
-description: "A comprehensive Flutter package for accessing country dial codes, country information, flags, and more."
+description: "A comprehensive Flutter package for accessing country dial codes, country information, flags, and more. Includes ready-to-use widgets for country selection."
 version: 0.0.1
 homepage: https://github.com/mahmoud-badwy/dial_codes
+repository: https://github.com/mahmoud-badwy/dial_codes
+issue_tracker: https://github.com/mahmoud-badwy/dial_codes/issues
 
 environment:
   sdk: ^3.8.1
