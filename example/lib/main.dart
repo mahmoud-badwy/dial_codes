@@ -12,10 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Dial Codes Example',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
       home: const CountryListPage(),
     );
   }
@@ -43,9 +40,10 @@ class _CountryListPageState extends State<CountryListPage> {
 
   Future<void> loadCountries() async {
     setState(() => isLoading = true);
-    
-    final loadedCountries = await DialCodesService.instance.getCountriesSortedByName();
-    
+
+    final loadedCountries = await DialCodesService.instance
+        .getCountriesSortedByName();
+
     setState(() {
       countries = loadedCountries;
       filteredCountries = loadedCountries;
@@ -61,8 +59,8 @@ class _CountryListPageState extends State<CountryListPage> {
       } else {
         filteredCountries = countries.where((country) {
           return country.name.toLowerCase().contains(query.toLowerCase()) ||
-                 country.code.toLowerCase().contains(query.toLowerCase()) ||
-                 country.dialCode.contains(query);
+              country.code.toLowerCase().contains(query.toLowerCase()) ||
+              country.dialCode.contains(query);
         }).toList();
       }
     });
@@ -71,10 +69,7 @@ class _CountryListPageState extends State<CountryListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Country Dial Codes'),
-        elevation: 2,
-      ),
+      appBar: AppBar(title: const Text('Country Dial Codes'), elevation: 2),
       body: Column(
         children: [
           // Search Bar
@@ -179,61 +174,70 @@ class _CountryListPageState extends State<CountryListPage> {
             child: isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : filteredCountries.isEmpty
-                    ? Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.search_off, size: 64, color: Colors.grey[400]),
-                            const SizedBox(height: 16),
-                            Text(
-                              'No countries found',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.grey[600],
-                              ),
-                            ),
-                          ],
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.search_off,
+                          size: 64,
+                          color: Colors.grey[400],
                         ),
-                      )
-                    : ListView.builder(
-                        itemCount: filteredCountries.length,
-                        itemBuilder: (context, index) {
-                          final country = filteredCountries[index];
-                          final isSelected = selectedCountry == country;
+                        const SizedBox(height: 16),
+                        Text(
+                          'No countries found',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: filteredCountries.length,
+                    itemBuilder: (context, index) {
+                      final country = filteredCountries[index];
+                      final isSelected = selectedCountry == country;
 
-                          return Card(
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 4,
+                      return Card(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 4,
+                        ),
+                        elevation: isSelected ? 4 : 1,
+                        color: isSelected ? Colors.blue[50] : null,
+                        child: ListTile(
+                          leading: Text(
+                            country.emoji,
+                            style: const TextStyle(fontSize: 32),
+                          ),
+                          title: Text(
+                            country.name,
+                            style: TextStyle(
+                              fontWeight: isSelected
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
                             ),
-                            elevation: isSelected ? 4 : 1,
-                            color: isSelected ? Colors.blue[50] : null,
-                            child: ListTile(
-                              leading: Text(
-                                country.emoji,
-                                style: const TextStyle(fontSize: 32),
-                              ),
-                              title: Text(
-                                country.name,
-                                style: TextStyle(
-                                  fontWeight: isSelected 
-                                      ? FontWeight.bold 
-                                      : FontWeight.normal,
-                                ),
-                              ),
-                              subtitle: Text('${country.code} • ${country.dialCode}'),
-                              trailing: isSelected
-                                  ? const Icon(Icons.check_circle, color: Colors.blue)
-                                  : null,
-                              onTap: () {
-                                setState(() {
-                                  selectedCountry = isSelected ? null : country;
-                                });
-                              },
-                            ),
-                          );
-                        },
-                      ),
+                          ),
+                          subtitle: Text(
+                            '${country.code} • ${country.dialCode}',
+                          ),
+                          trailing: isSelected
+                              ? const Icon(
+                                  Icons.check_circle,
+                                  color: Colors.blue,
+                                )
+                              : null,
+                          onTap: () {
+                            setState(() {
+                              selectedCountry = isSelected ? null : country;
+                            });
+                          },
+                        ),
+                      );
+                    },
+                  ),
           ),
         ],
       ),

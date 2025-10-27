@@ -8,12 +8,12 @@ void main() {
   setUpAll(() async {
     // Mock the asset loading
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-        .setMockMethodCallHandler(
-      const MethodChannel('flutter/assets'),
-      (MethodCall methodCall) async {
-        if (methodCall.method == 'loadString') {
-          // Return a minimal mock JSON for testing
-          return '''[
+        .setMockMethodCallHandler(const MethodChannel('flutter/assets'), (
+          MethodCall methodCall,
+        ) async {
+          if (methodCall.method == 'loadString') {
+            // Return a minimal mock JSON for testing
+            return '''[
             {
               "name": "Egypt",
               "code": "EG",
@@ -39,10 +39,9 @@ void main() {
               "image": "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/CA.svg"
             }
           ]''';
-        }
-        return null;
-      },
-    );
+          }
+          return null;
+        });
   });
 
   group('Country Model', () {
@@ -207,13 +206,13 @@ void main() {
 
     test('clearCache works correctly', () async {
       final service = DialCodesService.instance;
-      
+
       // Load countries
       await service.getCountries();
-      
+
       // Clear cache
       service.clearCache();
-      
+
       // Should reload
       final countries = await service.getCountries();
       expect(countries, isNotEmpty);

@@ -12,7 +12,7 @@ class DialCodesService {
   List<Country>? _countries;
 
   /// Gets the list of all countries
-  /// 
+  ///
   /// Returns a cached list if already loaded, otherwise loads from JSON
   Future<List<Country>> getCountries() async {
     if (_countries != null) {
@@ -30,7 +30,7 @@ class DialCodesService {
   }
 
   /// Finds a country by its ISO code
-  /// 
+  ///
   /// Returns null if not found
   Future<Country?> getCountryByCode(String code) async {
     final countries = await getCountries();
@@ -44,7 +44,7 @@ class DialCodesService {
   }
 
   /// Finds a country by its name
-  /// 
+  ///
   /// Returns null if not found
   Future<Country?> getCountryByName(String name) async {
     final countries = await getCountries();
@@ -58,14 +58,12 @@ class DialCodesService {
   }
 
   /// Finds a country by its dial code
-  /// 
+  ///
   /// Returns null if not found
   Future<Country?> getCountryByDialCode(String dialCode) async {
     final countries = await getCountries();
     try {
-      return countries.firstWhere(
-        (country) => country.dialCode == dialCode,
-      );
+      return countries.firstWhere((country) => country.dialCode == dialCode);
     } catch (e) {
       return null;
     }

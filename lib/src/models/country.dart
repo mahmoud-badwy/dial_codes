@@ -71,14 +71,7 @@ class Country {
 
   @override
   int get hashCode {
-    return Object.hash(
-      name,
-      code,
-      emoji,
-      unicode,
-      dialCode,
-      image,
-    );
+    return Object.hash(name, code, emoji, unicode, dialCode, image);
   }
 
   /// Creates a copy of this Country with the given fields replaced
