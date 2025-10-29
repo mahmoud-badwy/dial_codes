@@ -15,6 +15,8 @@ and the Flutter guide for
 
 A comprehensive Flutter package that provides easy access to country information including dial codes, country codes, flags, and more. Perfect for building international phone number inputs, country selectors, and other country-related features.
 
+<a href="https://ibb.co/Sw49qb7F"><img src="https://i.ibb.co/Zzpky51q/package.gif" alt="package" border="0"></a>
+
 ## Features
 
 - 📞 Complete list of international dial codes
@@ -31,7 +33,7 @@ Add this package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  dial_codes: ^0.0.2
+  dial_codes: ^0.0.3
 ```
 or 
 
