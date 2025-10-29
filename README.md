@@ -31,9 +31,13 @@ Add this package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  dial_codes: ^0.0.1
+  dial_codes: ^0.0.2
 ```
+or 
 
+```bash
+flutter pub add dial_codes
+```
 Then run:
 
 ```bash
