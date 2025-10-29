@@ -1,4 +1,13 @@
-## 0.0.1
+## 0.0.2 - 2025-10-29
+
+* Bug fixes
+  - Make `Country.fromJson` resilient to null/missing JSON values to prevent
+    runtime TypeError when parsing country data from assets or external JSON.
+
+* Maintenance
+  - Bumped package version to `0.0.2`.
+  - Minor docs and example updates (example integrated into `testing_app`).
+
 
 ## 0.0.1
 
