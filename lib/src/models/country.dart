@@ -29,13 +29,23 @@ class Country {
 
   /// Creates a Country instance from a JSON map
   factory Country.fromJson(Map<String, dynamic> json) {
+    // Defensive parsing: the JSON source may contain null or missing keys.
+    // Coerce values to String using toString() and fall back to an empty
+    // string when a key is missing or null to avoid type cast errors.
+    final name = json['name']?.toString() ?? '';
+    final code = json['code']?.toString() ?? '';
+    final emoji = json['emoji']?.toString() ?? '';
+    final unicode = json['unicode']?.toString() ?? '';
+    final dialCode = json['dial_code']?.toString() ?? '';
+    final image = json['image']?.toString() ?? '';
+
     return Country(
-      name: json['name'] as String,
-      code: json['code'] as String,
-      emoji: json['emoji'] as String,
-      unicode: json['unicode'] as String,
-      dialCode: json['dial_code'] as String,
-      image: json['image'] as String,
+      name: name,
+      code: code,
+      emoji: emoji,
+      unicode: unicode,
+      dialCode: dialCode,
+      image: image,
     );
   }
 
